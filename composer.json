@@ -1,0 +1,12 @@
+{
+    "name": "xiel/frontserver",
+    "authors": [
+        {
+            "name": "Steven X",
+            "email": "stevenx@yitongxun.cn"
+        }
+    ],
+    "require": {
+        "slim/slim": "^3.9"
+    }
+}
