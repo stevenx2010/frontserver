@@ -5,12 +5,14 @@ use \Psr\Http\Message\ResponseInterface as Response;
 require '../vendor/autoload.php';
 
 $app = new \Slim\App;
+/*
 $app->get('/hello/{name}', function (Request $request, Response $response, array $args) {
     $name = $args['name'];
     $response->getBody()->write("Hello, $name");
 
     return $response;
 });
+*/
 
 $app->get('/', function(Request $req, Response $res) {
     echo $req->getUri();
@@ -42,6 +44,7 @@ $app->get('/', function(Request $req, Response $res) {
     return $res;
 });
 
+// POST from client
 require '../routes/adRequest.php' ;
 
 $app->run();
