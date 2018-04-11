@@ -44,6 +44,9 @@ $app->get('/', function(Request $req, Response $res) {
     return $res;
 });
 
+
+
+
 // POST from client
 require '../routes/adRequest.php' ;
 

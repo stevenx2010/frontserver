@@ -15,9 +15,6 @@ function getImageUrl($host = 'adserver.yitongxun.cn', $port = 8080, $zones = 5) 
 
     $url = 'http://' . $host . ':' . $port  . $path .'?' . $query;
 
-    echo $url;
-    echo '<br />';
-
     /* send HTTP request by curl
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url);
@@ -33,8 +30,7 @@ function getImageUrl($host = 'adserver.yitongxun.cn', $port = 8080, $zones = 5) 
     // send HTTP request by file_get_contents
     ini_set('user_agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36');
     $content = file_get_contents($url);
-    echo $content;
-    echo '<hr>';
+    //print_r(explode('img', ((array)((array)json_decode($content))['revive-0-0'])['html']));
 
     // extract the image url from response
     $pattern = '/(.*"<img src=\')(.*)(jpg|png|gif)(.*)/ism';
@@ -45,6 +41,7 @@ function getImageUrl($host = 'adserver.yitongxun.cn', $port = 8080, $zones = 5) 
     $pattern = '#\\\#';
     $url_array = preg_split($pattern, $imgurl);
     $imgurl = implode($url_array);
+    
     return $imgurl;
 
 

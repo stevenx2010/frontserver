@@ -3,9 +3,9 @@ use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
 require_once '../src/globals.php';
+require_once '../src/prepareResponse.php';
 
 $app->post('/', function(Request $req, Response $res, array $args) {
-    $GLOBALS['cnt'] += 1;
  
     $parsedBody = $req->getParsedBody();
     $GLOBALS['request'] = implode($parsedBody);
@@ -23,10 +23,10 @@ $app->post('/', function(Request $req, Response $res, array $args) {
     echo '<br/>';
     echo $req->getContentType();
 */
-    require '../src/prepareResponse.php';
-    //return $res->withHeader('Content-type', 'application/json');
+    $body = GenResponse('frontserver', '/');
+    print_r($body);
 
-    return $res;
+    return $res->withHeader('Content-type', 'application/json')->withJson($body);
 });
 
 ?>
