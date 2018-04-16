@@ -38,16 +38,16 @@ $app->get('/', function(Request $req, Response $res) {
 
     echo implode($req->GetHeader('Content-type'));
 
-    
-    require '../src/getAd.php';
-
     return $res;
 });
 
 
 
 
-// POST from client
-require '../routes/adRequest.php' ;
+// POST: ad request from client
+require_once '../routes/adRequest.php' ;
+
+// GET: beacon request from client
+require_once '../routes/beaconRequest.php';
 
 $app->run();

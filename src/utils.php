@@ -1,5 +1,4 @@
 <?php
-$GLOBALS['request'] = '';
 
 class Counter {
     public $mem;

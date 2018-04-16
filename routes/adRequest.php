@@ -2,8 +2,9 @@
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
-require_once '../src/globals.php';
-require_once '../src/prepareResponse.php';
+require_once '../config/env.php';
+require_once '../src/utils.php';
+require_once '../src/genAdResponse.php';
 
 $app->post('/', function(Request $req, Response $res, array $args) {
  
@@ -23,7 +24,7 @@ $app->post('/', function(Request $req, Response $res, array $args) {
     echo '<br/>';
     echo $req->getContentType();
 */
-    $body = GenResponse('frontserver', '/');
+    $body = genAdResponse($GLOBALS['Front_Server']['name'], '/beacon');
     print_r($body);
 
     return $res->withHeader('Content-type', 'application/json')->withJson($body);
