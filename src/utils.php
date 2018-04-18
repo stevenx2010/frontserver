@@ -24,4 +24,13 @@ class Counter {
     }
 }
 
+// Get current date/time & format it in MySQL format
+function getDateTime() {
+    $datetime = getdate();
+    $datetime_in_mysql_format = $datetime['year'] . '-' . $datetime['mon'] . '-' . $datetime['mday'] . ' ' .
+                        $datetime['hours'] . ':' . $datetime['minutes'] . ':' . $datetime['seconds'];
+
+    return $datetime_in_mysql_format;
+};
+
 ?>

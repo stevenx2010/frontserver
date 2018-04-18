@@ -17,5 +17,18 @@ $GLOBALS['DSP_Server'] = array (
     'zone' => 5
 );
 
+$GLOBALS['Beacon_Server'] = array (
+    'name' => 'frontserver',
+    'port' => 80
+);
 
+$GLOBALS['Clicking_Server'] = array (
+    'name' => 'www.sohu.com',
+    'port' => 80
+);
+
+$GLOBALS['Database_Server'] = array (
+    'name' => 'localhost',
+    'port' => 3306
+);
 ?>

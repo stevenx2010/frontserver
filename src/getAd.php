@@ -32,6 +32,18 @@ function getImageUrl($host = 'adserver.yitongxun.cn', $port = 8080, $zones = 5) 
     $content = file_get_contents($url);
     //print_r(explode('img', ((array)((array)json_decode($content))['revive-0-0'])['html']));
 
+    // extract bannerid from response
+    $pattern = '/(.*bannerid=)(\d+)(&.*)/ism';
+    $replacement = '$2';
+    $bannerid = preg_replace($pattern, $replacement, $content);
+    $GLOBALS['ad_serving_log']['revive_bannerid'] = $bannerid;
+
+    // extract campaignid from response
+    $pattern = '/(.*campaignid=)(\d+)(&.*)/ism';
+    $replacement = '$2';
+    $campaignid = preg_replace($pattern, $replacement, $content);
+    $GLOBALS['ad_serving_log']['revive_campaignid'] = $campaignid;
+
     // extract the image url from response
     $pattern = '/(.*"<img src=\')(.*)(jpg|png|gif)(.*)/ism';
     $replacement = '$2$3';
@@ -45,7 +57,7 @@ function getImageUrl($host = 'adserver.yitongxun.cn', $port = 8080, $zones = 5) 
     return $imgurl;
 
 
-    /* sned HTTP request by fsockopen, fwrite, fgets & fclose
+    /* send HTTP request by fsockopen, fwrite, fgets & fclose
     $fs = fsockopen($host, $port, $errcode, $errstr, 30);
 
     if(!$fs) {
