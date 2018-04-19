@@ -1,4 +1,5 @@
 <?php
+
 require_once '../config/env.php';
 require_once '../config/databases.php';
 
