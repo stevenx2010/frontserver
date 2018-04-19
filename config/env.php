@@ -31,4 +31,6 @@ $GLOBALS['Database_Server'] = array (
     'name' => 'localhost',
     'port' => 3306
 );
+
+$GLOBALS['OS'] = 'Windows';
 ?>

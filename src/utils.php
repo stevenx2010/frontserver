@@ -1,10 +1,15 @@
 <?php
 
+require_once '../config/env.php';
+
 class Counter {
-    public $mem;
+    private $mem;
 
     public function __construct($host) {
-        $this->mem = new Memcache();
+        if($GLOBALS['OS'] == 'Windows')
+            $this->mem = new Memcache();
+        else    
+            $this->mem = new Memcached();
         $this->mem->connect($host, 11211);
 
     }
