@@ -25,7 +25,10 @@ DROP TABLE IF EXISTS `ip_addresses`;
 CREATE TABLE `ip_addresses` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `ip` char(15) NOT NULL,
-  PRIMARY KEY (`id`)
+  `publisherid` int(10) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_publisherid` (`publisherid`),
+  CONSTRAINT `fk_publisherid` FOREIGN KEY (`publisherid`) REFERENCES `publishers` (`publisherid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -38,4 +41,4 @@ CREATE TABLE `ip_addresses` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-04-19  0:46:25
+-- Dump completed on 2018-04-19 13:36:33

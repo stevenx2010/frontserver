@@ -4,7 +4,7 @@ require_once 'setupDatabase.php';
 function validateConnection($ipAddress) {
     $mysqli = dbConnection();
 
-    $sql = "SELECT * from publishers A INNER JOIN ip_addresses B ON A.id_ip=B.id where B.ip='$ipAddress'";
+    $sql = "SELECT * from ip_addresses A INNER JOIN publishers B ON A.publisherid=B.publisherid where A.ip='$ipAddress'";
 
     $stmt = $mysqli->stmt_init();
     $stmt->prepare($sql);
