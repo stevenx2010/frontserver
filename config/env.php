@@ -1,10 +1,4 @@
 <?php
-$GLOBALS['dbconfig'] = array (
-    'host' => 'localhost',
-    'username' => 'adserver',
-    'password' => '1234',
-    'db' => 'revive'
-);
 
 $GLOBALS['Front_Server'] = array (
     'name' => 'frontserver',

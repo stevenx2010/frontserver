@@ -21,6 +21,7 @@ $app->post('/', function(Request $req, Response $res, array $args) {
         return $res->withHeader('Content-type', 'application/json')->withJson($body);
     } 
 
+    // analyse response from DSP server
     $parsedBody = $req->getParsedBody();
     $GLOBALS['request'] = implode($parsedBody);
     $GLOBALS['zoneid'] = $parsedBody['zoneid'];
@@ -30,7 +31,7 @@ $app->post('/', function(Request $req, Response $res, array $args) {
 
     // prepare response
     $body = genAdResponse();
- 
+
     $GLOBALS['ad_serving_log']['response'] = json_encode($body);
     //print_r($GLOBALS['ad_serving_log']);
 
@@ -44,13 +45,18 @@ $app->post('/', function(Request $req, Response $res, array $args) {
         $GLOBALS['ad_serving_log']['revive_campaignid'] . ',' .
         $GLOBALS['ad_serving_log']['revive_zoneid'] . ',' .
         $GLOBALS['ad_serving_log']['revive_bannerid'] . ')';
-
+  
     $mysqli = dbConnection();
     
     $stmt = $mysqli->stmt_init();
     $stmt->prepare($sql);
+ 
     if(!$stmt->execute()) {
-        echo "Db error: cannot insert record..";
+        $body = array();
+        $body['status'] = 0;
+        $body['msg'] = 'DB Error: cannot log into db';
+
+        return $res->withHeader('Content-type', 'application/json')->withJson($body);
     }
 
     $stmt->close();

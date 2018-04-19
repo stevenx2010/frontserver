@@ -1,4 +1,6 @@
 <?php
+require_once 'setupDatabase.php';
+
 function getImageUrl($host = 'adserver.yitongxun.cn', $port = 8080, $zones = 5) {
     //$host = 'adserver.yitongxun.cn';
     $path = '/revive/www/delivery/asyncspc.php';
@@ -44,8 +46,15 @@ function getImageUrl($host = 'adserver.yitongxun.cn', $port = 8080, $zones = 5) 
     $campaignid = preg_replace($pattern, $replacement, $content);
     $GLOBALS['ad_serving_log']['revive_campaignid'] = $campaignid;
 
+    // extract destinaton url from response
+    $pattern = '/(.*dest=)(.*)(\' target)(.*)/ism';
+    $replacement = '$2';
+    $dest = preg_replace($pattern, $replacement, $content);
+    if(strncmp($dest, 'http', 4) != 0) $dest = '';
+    $GLOBALS['ad_serving_log']['destination'] = urldecode($dest);
+ 
     // extract the image url from response
-    $pattern = '/(.*"<img src=\')(.*)(jpg|png|gif)(.*)/ism';
+    $pattern = '/(.*<img src=\')(.*)(jpg|png|gif)(.*)/ism';
     $replacement = '$2$3';
     $imgurl = preg_replace($pattern, $replacement, $content);
 
