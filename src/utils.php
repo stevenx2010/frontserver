@@ -6,12 +6,14 @@ class Counter {
     private $mem;
 
     public function __construct($host) {
-        if($GLOBALS['OS'] == 'Windows')
+        if($GLOBALS['OS'] == 'Windows') {
             $this->mem = new Memcache();
-        else    
+            $this->mem->connect($host, 11211);
+        }
+        else {
             $this->mem = new Memcached();
-        $this->mem->connect($host, 11211);
-
+            $this->mem->addServer($host, 11211);
+        }
     }
 
     public function setCount() {

@@ -2,6 +2,7 @@
 
 require_once 'utils.php';
 require_once '../config/env.php';
+require_once '../config/databases.php';
 require_once 'getAd.php';
 
 function genAdResponse() {

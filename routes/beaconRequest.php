@@ -25,3 +25,4 @@ $app->get('/beacon/{id}', function(Request $req, Response $res, array $args) {
 
     return $res;
 });
+?>
