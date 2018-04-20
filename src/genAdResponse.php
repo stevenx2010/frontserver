@@ -10,9 +10,12 @@ function genAdResponse() {
     // get image from DSP server
     $imageUrl = getImageUrl($GLOBALS['DSP_Server']['name'], $GLOBALS['DSP_Server']['port'], $GLOBALS['zoneid']);
 
-    if(!$imageUrl) {
+    if(!$imageUrl || strncmp($imageUrl, 'http', 4) != 0) {
         $body['status'] = 0;
-        $body['msg'] = 'Error: cannot get ads from the DSP server...';
+        $body['msg'] = 'Info: no ad from DSP, possible reason: ' . 
+                        '1. the compaign has stopped; ' . 
+                        '2. the ad has reached to its delivery limit; ' .
+                        '3. ad server has problem';
 
         return $body;
     } 
