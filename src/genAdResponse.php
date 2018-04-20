@@ -12,7 +12,7 @@ function genAdResponse() {
 
     if(!$imageUrl || strncmp($imageUrl, 'http', 4) != 0) {
         $body['status'] = 0;
-        $body['msg'] = 'Info: no ad from DSP, possible reason: ' . 
+        $body['msg'] = 'Info: no ad from DSP, possible reasons: ' . 
                         '1. the compaign has stopped; ' . 
                         '2. the ad has reached to its delivery limit; ' .
                         '3. ad server has problem';

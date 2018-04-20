@@ -10,7 +10,7 @@ require_once '../src/authenticate.php';
 
 $app->post('/', function(Request $req, Response $res, array $args) {
  
-    // Check if the connection is legal
+    // Check if the connection is from authorized IPs
     $ip = $_SERVER['REMOTE_ADDR'];
 
     $result = validateConnection($ip);
@@ -21,9 +21,40 @@ $app->post('/', function(Request $req, Response $res, array $args) {
         return $res->withHeader('Content-type', 'application/json')->withJson($body);
     } 
 
-    // analyse response from DSP server
+    // Validate request: 1. Check if Content-type is set; 2.Test if Content-type is application/json
+    if(!$req->hasHeader('Content-type')) {
+        $body['status'] = 0;
+        $body['msg'] = 'POST Request Error: Content-type should be set in request header';
+ 
+        return $res->withHeader('Content-type', 'application/json')->withJson($body);       
+    }
+    $contentType = $req->getHeader('Content-type');
+    if($contentType[0] != 'application/json') {
+        $body['status'] = 0;
+        $body['msg'] = 'POST Request Error: Content-type should be set to application/json';
+ 
+        return $res->withHeader('Content-type', 'application/json')->withJson($body);
+    }
+
+    // Check if the body is in valid JSON format
+    $requestBody = $req->getBody()->getContents();
+    if(!json_decode($requestBody)) {
+        $body['status'] = 0;
+        $body['msg'] = 'POST Request Error: content is not in valid JSON format';
+ 
+        return $res->withHeader('Content-type', 'application/json')->withJson($body);       
+    }
+
+    // Analyze request contents
     $parsedBody = $req->getParsedBody();
     $GLOBALS['request'] = implode($parsedBody);
+    //Check if zonid is set
+    if(!isset($parsedBody['zoneid'])) {
+        $body['status'] = 0;
+        $body['msg'] = "Request Error: 'zonid' is a must field, you didn't set it";
+ 
+        return $res->withHeader('Content-type', 'application/json')->withJson($body);             
+    }
     $GLOBALS['zoneid'] = $parsedBody['zoneid'];
     $GLOBALS['ad_serving_log']['request'] = json_encode($parsedBody);
     $GLOBALS['ad_serving_log']['revive_zoneid'] = $parsedBody['zoneid']; 
