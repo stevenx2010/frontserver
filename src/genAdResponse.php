@@ -8,7 +8,7 @@ require_once 'getAd.php';
 function genAdResponse() {
     $body = array();
     // get image from DSP server
-    $imageUrl = getImageUrl($GLOBALS['DSP_Server']['name'], $GLOBALS['DSP_Server']['port'], $GLOBALS['DSP_Server']['zone']);
+    $imageUrl = getImageUrl($GLOBALS['DSP_Server']['name'], $GLOBALS['DSP_Server']['port'], $GLOBALS['zoneid']);
 
     if(!$imageUrl) {
         $body['status'] = 0;
