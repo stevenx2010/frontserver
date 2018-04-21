@@ -2,10 +2,8 @@
 require_once 'setupDatabase.php';
 
 function getImageUrl($host = 'adserver.yitongxun.cn', $port = 8080, $zones = 5) {
-    //$host = 'adserver.yitongxun.cn';
+    // Construct uri to Revive AdServer
     $path = '/revive/www/delivery/asyncspc.php';
-    //$port = 8080;
-    //$zones = 5;
     $prefix = 'revive-0-';
     $block = 1;
     $loc = 'http://adserver.yitongxun.cn:8080/index2.html';
@@ -34,26 +32,27 @@ function getImageUrl($host = 'adserver.yitongxun.cn', $port = 8080, $zones = 5) 
     $content = file_get_contents($url);
     //print_r(explode('img', ((array)((array)json_decode($content))['revive-0-0'])['html']));
 
-    // extract bannerid from response
+    // Analyze content returned by Revive AdServer
+    // extract 'bannerid' from response
     $pattern = '/(.*bannerid=)(\d+)(&.*)/ism';
     $replacement = '$2';
     $bannerid = preg_replace($pattern, $replacement, $content);
     $GLOBALS['ad_serving_log']['revive_bannerid'] = $bannerid;
 
-    // extract campaignid from response
+    // extract 'campaignid' from response
     $pattern = '/(.*campaignid=)(\d+)(&.*)/ism';
     $replacement = '$2';
     $campaignid = preg_replace($pattern, $replacement, $content);
     $GLOBALS['ad_serving_log']['revive_campaignid'] = $campaignid;
 
-    // extract destinaton url from response
+    // extract 'destinaton' url from response
     $pattern = '/(.*dest=)(.*)(\' target)(.*)/ism';
     $replacement = '$2';
     $dest = preg_replace($pattern, $replacement, $content);
     if(strncmp($dest, 'http', 4) != 0) $dest = '';
     $GLOBALS['ad_serving_log']['destination'] = urldecode($dest);
  
-    // extract the image url from response
+    // extract the 'image' url from response
     $pattern = '/(.*<img src=\')(.*)(jpg|png|gif)(.*)/ism';
     $replacement = '$2$3';
     $imgurl = preg_replace($pattern, $replacement, $content);

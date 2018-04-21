@@ -20,9 +20,10 @@ function genAdResponse() {
         return $body;
     } 
 
+    // Parepare response body
     $body['status'] = 1;
         
-    // generate unique id
+    // generate unique id as the response id
     $myCounter = new Counter('127.0.0.1');
     $count = $myCounter->getCount();
     $myCounter->setCount();

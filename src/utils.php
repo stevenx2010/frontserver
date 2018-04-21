@@ -5,6 +5,7 @@ require_once '../config/env.php';
 class Counter {
     private $mem;
 
+    /* @param string $host: the address of memcached*/
     public function __construct($host) {
         if($GLOBALS['OS'] == 'Windows') {
             $this->mem = new Memcache();
@@ -31,7 +32,7 @@ class Counter {
     }
 }
 
-// Get current date/time & format it in MySQL format
+// Get current date/time & format it to MySQL format
 function getDateTime() {
     $datetime = getdate();
     $datetime_in_mysql_format = $datetime['year'] . '-' . $datetime['mon'] . '-' . $datetime['mday'] . ' ' .
